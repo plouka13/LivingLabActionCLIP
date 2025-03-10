@@ -1,8 +1,10 @@
 import json
 import pandas as pd
 
+creator = 'JH'
+
 # Load the JSON data
-with open('./elan_export.json') as f:
+with open(f'./{creator}_elan_export.json') as f:
     data = json.load(f)
 
 # Extract the relevant information
@@ -17,7 +19,8 @@ for item in data['contains']:
                 annotations.append({
                     'start_time': float(start_time),
                     'end_time': float(end_time),
-                    'annotation': annotation_value
+                    'annotation': annotation_value,
+                    'data_type': item['label']
                 })
 
 # Create a DataFrame
@@ -27,4 +30,4 @@ df = pd.DataFrame(annotations)
 print(df)
 
 # Save the DataFrame to a JSON file
-df.to_json('./JH_annotations.json', orient='records', lines=True)
+df.to_json(f'./{creator}_annotations.json', orient='records', lines=True)
